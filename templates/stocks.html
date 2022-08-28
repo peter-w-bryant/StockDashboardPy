@@ -1,0 +1,64 @@
+{% extends "layouts/main.html" %}
+
+{% block head %}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="//code.jquery.com/jquery-1.12.4.js"></script>
+<script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- Dynamic endpoint for stylesheets -->
+<link rel="stylesheet" href=url_for('/static/css/normalize.css', ticker = {{ticker}})/>
+<link rel="stylesheet" href=url_for('/static/css/skeleton.css', ticker = {{ticker}})/>
+<link rel="stylesheet" href=url_for('/static/css/style.css', ticker = {{ticker}})/>
+{% endblock %}
+
+{% block content%}
+
+
+</body>
+
+<!-- Form where we can select a ticker -->
+<form method="get"></form>
+    <label for="stocks">Choose a stock ticker:</label>
+    <select id="stocks" name="stocks">
+    <!-- Loop over all stock tickers, providing the user with option of which tickers to select -->
+    {%for i in df_tickers%}
+      <option value="{{i}}">{{i}}</option>
+    {% endfor %}
+    <!-- When the option has been select, submit the ticker to javascript function "stock_choose()" and our route in run.py -->
+    <input type="button" value="Submit" onclick="stock_choose()"> 
+</form>
+
+{%if ticker_info != None %}
+
+        <div>
+            <div id="plotly-stock-candle"></div>
+            <script>
+                //Parse your Json variable here
+                var graphs = {{ plotly_plot | safe }};
+                Plotly.plot('plotly-stock-candle', graphs, {});
+            </script>
+        </div>
+
+        <div class="row">
+            <div class="column">
+                {{ ticker_info[0]|safe }}
+            </div>
+            <div class="column">
+               {{ ticker_info[1]|safe }}
+            </div>
+        </div>
+{% endif %}
+
+</body>
+
+<!-- Fetched the selected ticker and replaces the -->
+<script>
+    function stock_choose() {
+        var e = document.getElementById("stocks");
+        var list_stocks = e.options[e.selectedIndex].value;
+        var theUrl = "/".concat("stocks/"+list_stocks);
+        window.location.replace(theUrl);
+    }
+</script>
+
+{% endblock %}
