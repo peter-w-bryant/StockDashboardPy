@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script src="//code.jquery.com/jquery-1.12.4.js"></script>
 <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <!-- Dynamic endpoint for stylesheets -->
 <link rel="stylesheet" href=url_for('/static/css/normalize.css', ticker = {{ticker}})/>
 <link rel="stylesheet" href=url_for('/static/css/skeleton.css', ticker = {{ticker}})/>
@@ -16,16 +17,12 @@
 
 </body>
 
-<!-- Form where we can select a ticker -->
-<form method="get"></form>
-    <label for="stocks">Choose a stock ticker:</label>
-    <select id="stocks" name="stocks">
-    <!-- Loop over all stock tickers, providing the user with option of which tickers to select -->
-    {%for i in df_tickers%}
-      <option value="{{i}}">{{i}}</option>
-    {% endfor %}
-    <!-- When the option has been select, submit the ticker to javascript function "stock_choose()" and our route in run.py -->
-    <input type="button" value="Submit" onclick="stock_choose()"> 
+<!-- New Search Form -->
+<form>
+    {{form.autocomp.label}} <br> {{ form.autocomp}}
+    <button type = "submit">Submit</button>
+    <p style="color:grey"><i>ex. "Applied Blockchain INC", "Information Technology", "APLD</i></p>
+
 </form>
 
 {%if ticker_info != None %}
@@ -51,14 +48,38 @@
 
 </body>
 
-<!-- Fetched the selected ticker and replaces the -->
+<!-- Searches for a similar string in the search bar which is atleast 3 characters-->
 <script>
-    function stock_choose() {
-        var e = document.getElementById("stocks");
-        var list_stocks = e.options[e.selectedIndex].value;
-        var theUrl = "/".concat("stocks/"+list_stocks);
-        window.location.replace(theUrl);
-    }
+    $(function() {
+        $.ajax({
+            url: '{{ url_for("autocomplete") }}'         // This is the url to autocomplete endpoint defined in app.py
+            }).done(function (data){                     // data is the list of strings ("Tickers", "Names", "Sectors") returned by the endpoint
+                $('#stock_autocomplete').autocomplete({  // This is the id of the search bar/form
+                    source: data,                        // This is the list of strings returned by the endpoint
+                    minLength: 1                         // This is the minimum number of characters required to search         
+                });
+            });
+        });
 </script>
+
+
+<!-- Observes the form when submitting the button and extrtacting the value from it, then splits it at the separators -->
+<script>
+    function handleSubmit(event) {
+        event.preventDefault();
+
+        const data = new FormData(event.target);            // Access the form data when the form is submitted
+        const value = Object.fromEntries(data.entries());   // Convert the data into a key/value pair
+        value.topics = data.getAll("autocomp");             // Get the value of the topics field
+        var ticker = value.topics[0];                       // Get the first value of the topics field (the ticker)
+        var ticker = ticker.split('|')[0].trim();           // Split the ticker at the '|' and trim the whitespace
+        var theUrl = "/".concat("stocks/"+ ticker);         // Concatenate the ticker to the url
+        window.location.replace(theUrl);                    // Redirect to the new url
+}
+
+const form = document.querySelector('form');                // Get the form
+form.addEventListener('submit', handleSubmit);              // Add an event listener for the form submission
+</script>
+
 
 {% endblock %}

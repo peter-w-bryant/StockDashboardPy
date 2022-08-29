@@ -1,43 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Stock Dashboard</title>
-        <meta name="msapplication-TileColor" content="#da532c">
-        <meta name="theme-color" content="#ffffff">
-        <script src="//cdn.plot.ly/plotly-latest.min.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stock Dashboard</title>
+  <meta name="msapplication-TileColor" content="#da532c">
+  <meta name="theme-color" content="#ffffff">
+  <script src="//cdn.plot.ly/plotly-latest.min.js"></script>
 
-        <link rel="stylesheet" href=/static/css/normalize.css/>
-        <link rel="stylesheet" href=/static/css/skeleton.css/>
-        <link rel="stylesheet" href=/static/css/style.css/>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="shortcut icon" type="image/jpg" href="/static/images/icon.png"/>
-    </head>
-    <body>
-        {% include 'includes/_navbar.html'%}
-    
-    <div class="container">
-            <div style="clear: both">
-                &nbsp;
-                {% block content%}
-                {% endblock %}
+  <link rel="stylesheet" href=/static/css/normalize.css />
+  <link rel="stylesheet" href=/static/css/skeleton.css />
+  <link rel="stylesheet" href=/static/css/style.css />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <link rel="shortcut icon" type="image/jpg" href="/static/images/candlestick.png" />
+</head>
 
-            </div>
+<body>
+  {% include 'includes/_navbar.html'%}
 
-        <script>
-        function myFunction() {
-          var x = document.getElementById("myTopnav");
-          if (x.className === "topnav") {
-            x.className += " responsive";
-          } else {
-            x.className = "topnav";
-          }
+  <div class="container">
+    <div style="clear: both">
+      &nbsp;
+      {% block content%}
+      {% endblock %}
+
+    </div>
+    <script>
+      function myFunction() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+          x.className += " responsive";
+        } else {
+          x.className = "topnav";
         }
-        </script>
-
+      }
+    </script>
+    <br><br>
+    <footer class="footer" style="background-color: FFFFFF; text-align:center">
+      <div class="container">
+        <div class="content has-text-centered">
+          <p>
+            <strong>StockDashboard.py</strong> by Peter Bryant &nbsp;<span class="glyphicon glyphicon-signal"
+              style="color:grey"></span>
+          </p>
+          <p style="font-size:xx-small; color:grey; font-style:italic"> Built with Flask and SQLite. </p> <br>
         </div>
-    </body>
+      </div>
+    </footer>
+
+  </div>
+</body>
+
 </html>

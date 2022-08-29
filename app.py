@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template,request,redirect,flash, session, url_for
+from flask import Flask, render_template,request,redirect,flash, session, url_for, Response
 from flask_security import Security, current_user, auth_required, hash_password, SQLAlchemySessionUserDatastore
 from database import db_session, init_db
 from flask_login import login_required, logout_user, LoginManager
@@ -10,6 +10,8 @@ import pandas as pd
 import plotly
 import helpers.plotly_layouts as plt
 import helpers.stocks as stocks
+from wtforms import StringField, Form
+from wtforms.validators import DataRequired
 
 
 # Create app
@@ -35,6 +37,21 @@ conn = sq.connect('{}.sqlite'.format("database"),check_same_thread=False)
 df = pd.read_sql('select * from {}'.format("stock_database"), conn)
 stock_infos = pd.read_sql("select * from {}".format("stock_infos"), conn)
 
+
+# A search form for the stock search bar
+class SearchForm(Form):
+    autocomp = StringField('Search by Stock Name, Ticker, or Industry:', id= 'stock_autocomplete', validators=[DataRequired(message="Please enter a valid stock name or ticker.")])
+
+@app.route('/_autocomplete', methods=['GET'])
+def autocomplete():
+    data = stock_infos[["Ticker", "Name", "Sector"]].copy() # Get the stock infos
+    data["Tickers_list"] = data["Ticker"] + " | " + data["Name"] + " | " + data["Sector"] # Create a list of tickers
+    data = data.fillna("No name")
+    tmp = data["Tickers_list"].to_list()
+    ticker_list_final = list(dict.fromkeys(tmp))
+    ticker_list_final = sorted(ticker_list_final)
+    return Response(json.dumps(ticker_list_final), mimetype='application/json')
+
 # Views
 @app.route("/",  methods=['GET', 'POST'])
 def index():
@@ -46,6 +63,8 @@ def index():
 def stocks(ticker):
 
     df_tickers = df["Ticker"].unique()
+
+    form = SearchForm(request.form)
 
     if ticker is None or ticker not in df_tickers:
         ticker = "AAN"
@@ -66,14 +85,16 @@ def stocks(ticker):
     plotly_plot = json.dumps(plot, cls=plotly.utils.PlotlyJSONEncoder)
 
     return render_template("stocks.html", plotly_plot= plotly_plot, ticker = ticker,
-                          df_tickers = df_tickers, ticker_info = [df1,df2])
+                          df_tickers = df_tickers, ticker_info = [df1,df2], form = form)
 
 # Simple landing page to choose a stock
 @app.route("/stocks")
 # @auth_required()
 def stocks_redirect():
     df_tickers = df["Ticker"].unique()
-    return render_template("stocks.html", df_tickers= df_tickers, ticker_info=None)
+    form = SearchForm(request.form)
+
+    return render_template("stocks.html", df_tickers= df_tickers, ticker_info=None, form = form)
 
 # An error handler for 404 errors that renders a a template if stock ticker is not found
 @app.errorhandler(404)
@@ -83,4 +104,4 @@ def not_found_error(error):
 
 if __name__ == "__main__":
     app.directory='./'
-    app.run(host='127.0.0.1', port=5000)
+    app.run(host='127.0.0.1', port=5000, debug=True)
