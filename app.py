@@ -35,14 +35,6 @@ conn = sq.connect('{}.sqlite'.format("database"),check_same_thread=False)
 df = pd.read_sql('select * from {}'.format("stock_database"), conn)
 stock_infos = pd.read_sql("select * from {}".format("stock_infos"), conn)
 
-# Create a user to test with
-@app.before_first_request
-def create_user():
-    init_db()
-    if not user_datastore.find_user(email="test@me.com"):
-        user_datastore.create_user(email="test@me.com", password=hash_password("password"))
-    db_session.commit()
-
 # Views
 @app.route("/",  methods=['GET', 'POST'])
 def index():
