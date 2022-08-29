@@ -8,8 +8,6 @@ import json
 import sqlite3 as sq
 import pandas as pd
 import plotly
-
-
 import helpers.plotly_layouts as plt
 import helpers.stocks as stocks
 
@@ -48,37 +46,11 @@ def create_user():
 # Views
 @app.route("/",  methods=['GET', 'POST'])
 def index():
-    if current_user.is_authenticated:
-        
-        greetings = f'Hello {current_user.email} !'
-
-    else:
-        greetings = 'Hello, please login'
-
-    return render_template("landing.html", greetings=greetings)
-
-@app.route("/login", methods=['GET', 'POST'])
-@auth_required()
-def home():
-    if current_user.is_authenticated:
-        
-        greetings = f'Hello {current_user.email} !'
-        return render_template("home.html", greetings=greetings)
-    
-    else:
-        return redirect("/", code=302)
-
-
-@app.route('/logout', methods=['GET', 'POST'])
-@auth_required()
-def logout():
-    logout_user()
-    
-    return redirect("/", code=302)
+    return render_template("home.html")
 
 # Dynamic endpoint for stock data per ticker. Requires filtering data by ticker
 @app.route("/stocks/<ticker>", methods=['POST','GET'])
-@auth_required()
+# @auth_required()
 def stocks(ticker):
 
     df_tickers = df["Ticker"].unique()
@@ -106,7 +78,7 @@ def stocks(ticker):
 
 # Simple landing page to choose a stock
 @app.route("/stocks")
-@auth_required()
+# @auth_required()
 def stocks_redirect():
     df_tickers = df["Ticker"].unique()
     return render_template("stocks.html", df_tickers= df_tickers, ticker_info=None)

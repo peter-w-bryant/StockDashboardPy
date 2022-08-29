@@ -4,13 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Stock Search</title>
-        <meta name="description" content="I present to you a free tutorial for developing a mobile friendly app"/>
-        <meta name="keywords" content="Tutorial, Mobile,  Free"/>
-        <meta name="author" content="<author>" />
-        <meta name="copyright" content="<author>" />
-        <meta name="robots" content="index"/>
-        <meta name="robots" content="follow"/>
+        <title>Stock Dashboard</title>
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
         <script src="//cdn.plot.ly/plotly-latest.min.js"></script>
@@ -19,29 +13,13 @@
         <link rel="stylesheet" href=/static/css/skeleton.css/>
         <link rel="stylesheet" href=/static/css/style.css/>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="shortcut icon" type="image/jpg" href="/static/images/icon.png"/>
     </head>
     <body>
+        {% include 'includes/_navbar.html'%}
     
     <div class="container">
-        <div class="topnav" id="myTopnav">
-            <a href="/" class="active">Home</a>
-            <a href="/login">Login</a>
-            <a href="/logout">Logout</a>
-            <div class="dropdown">
-                <button class="dropbtn">Stocks
-                    <i class="fa fa-caret-down"></i>
-                </button>
-                <div class="dropdown-content">
-                    <a href="/stocks">Stocks </a>
-                </div>
-            </div>
-            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
-                <i class="fa fa-bars"></i>
-            </a>
-        </div>
-
             <div style="clear: both">
                 &nbsp;
                 {% block content%}
