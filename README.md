@@ -26,6 +26,7 @@ This application was build with Flask, and utilitizes a SQLite3 database to stor
 
 <h4>Running StockDashboardPy Locally</h4>
 
+<p>Clone my repository</p>
 
 ```python
 $ git clone https://github.com/peter-w-bryant/StockDashboardPy.git
