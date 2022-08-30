@@ -36,5 +36,16 @@ $ git clone https://github.com/peter-w-bryant/StockDashboardPy.git
 $ python -m venv ./env
 $ env/Scripts/activate
 ```
+<p>Install all dependencies</p>
+```python
+$ pip install -r requirements.txt
+```
+<p>Create database (named database.sqlite)</p>
+```python
+$ python helpers/stocks.py
+```
 
-
+<p>Run the app and start your local server</p>
+```python
+$ python app.py
+```
