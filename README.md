@@ -37,10 +37,12 @@ $ python -m venv ./env
 $ env/Scripts/activate
 ```
 <p>Install all dependencies</p>
+
 ```python
 $ pip install -r requirements.txt
 ```
 <p>Create database (named database.sqlite)</p>
+
 ```python
 $ python helpers/stocks.py
 ```
