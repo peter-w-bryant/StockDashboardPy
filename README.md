@@ -23,3 +23,25 @@ This application was build with Flask, and utilitizes a SQLite3 database to stor
 
 ![alt text](demo_img/stocks4.png?raw=true)
 
+
+<h4>Running StockDashboardPy Locally</h4>
+'''
+$ git clone https://github.com/peter-w-bryant/StockDashboardPy.git
+'''
+<p>Create + activate virtual environment</p>
+'''
+$ python -m venv ./env
+$ env/Scripts/activate
+'''
+<p>Install all dependencies</p>
+'''
+$ pip install -r requirements.txt
+'''
+<p>Create database (named database.sqlite)</p>
+'''
+$ python helpers/stocks.py
+'''
+<p>Run the app and start your local server</p>
+'''
+$ python app.py
+'''
