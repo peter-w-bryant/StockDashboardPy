@@ -45,7 +45,4 @@ $ pip install -r requirements.txt
 $ python helpers/stocks.py
 ```
 
-<p>Run the app and start your local server</p>
-```python
-$ python app.py
-```
+
