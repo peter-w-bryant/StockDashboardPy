@@ -3,8 +3,23 @@ StockDashboard.py is a web-based database application for accessing data fom the
 
 This application was build with Flask, and utilitizes a SQLite3 database to store all stock information. The search bar features autocomplete which makes finding a stock's ticker much easier and it is implemented in the backend using javascript. The following images were captured of the application running locally.
 
-<h1>The Home Page</h1>
+<h2>The Home Page</h2>
 
 ![alt text](demo_img/homePage.png?raw=true)
 
+<h2>Stocks Page: Autocomplete</h2>
+
+![alt text](demo_img/stocks1.png?raw=true)
+
+<h2>Stocks Page: Search Autocomplete: APPLIED INDUSTRIAL TECHNOLOGIES IN</h2>
+
+![alt text](demo_img/stocks2.png?raw=true)
+
+<h2>Stocks Page: Search Output + Candle stick diagram: APPLIED INDUSTRIAL TECHNOLOGIES IN</h2>
+
+![alt text](demo_img/stocks3.png?raw=true)
+
+<h2>Stocks Page: Search Interactive Candle stick diagram: APPLIED INDUSTRIAL TECHNOLOGIES IN</h2>
+
+![alt text](demo_img/stocks4.png?raw=true)
 
