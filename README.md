@@ -6,3 +6,5 @@ This application was build with Flask, and utilitizes a SQLite3 database to stor
 The Home Page
 ![alt text](https://github.com/peter-w-bryant/StockDashboardPy/tree/main/demo_img/homePage.png?raw=true)
 
+<img src="[relative/path/in/repository/to/image.svg](https://github.com/peter-w-bryant/StockDashboardPy/tree/main/demo_img/homePage.png?raw=true)" width="128"/>
+
