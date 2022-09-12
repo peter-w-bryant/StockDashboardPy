@@ -12,6 +12,7 @@ import helpers.plotly_layouts as plt
 import helpers.stocks as stocks
 from wtforms import StringField, Form
 from wtforms.validators import DataRequired
+import config
 
 
 # Create app
@@ -23,10 +24,9 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 # Generate a secret key
-app.config['SECRET_KEY'] = os.environ.get("SECRET_KEY", 'pddfgfhghgf--ghb3Ag-ghgjwwss1234')
-# Bcrypt is set as default SECURITY_PASSWORD_HASH, which requires a salt
-# Generate a good salt using: secrets.SystemRandom().getrandbits(128)
-app.config['SECURITY_PASSWORD_SALT'] = os.environ.get("SECURITY_PASSWORD_SALT", '182837584038784930239485749030293857390')
+app.config['SECRET_KEY'] = config.secret
+
+app.config['SECURITY_PASSWORD_SALT'] = config.password_salt
 
 # Setup Flask-Security
 user_datastore = SQLAlchemySessionUserDatastore(db_session, User, Role)
